@@ -33,14 +33,14 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
-    , basement >0.0 && <0.1
-    , bytestring >=0.10.12.0 && <0.11.0.0
-    , cereal >0.5 && <0.6
-    , hashtables >1.0 && <1.4
-    , memory >0.14 && <0.16
-    , text >1.2 && <1.3
-    , vector >0.12 && <0.13
+      base
+    , basement
+    , bytestring
+    , cereal
+    , hashtables
+    , memory
+    , text
+    , vector
   default-language: Haskell2010
 
 executable erc20-exe
@@ -51,15 +51,15 @@ executable erc20-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
-    , basement >0.0 && <0.1
-    , bytestring >=0.10.12.0 && <0.11.0.0
-    , cereal >0.5 && <0.6
+      base
+    , basement
+    , bytestring
+    , cereal
     , erc20
-    , hashtables >1.0 && <1.4
-    , memory >0.14 && <0.16
-    , text >1.2 && <1.3
-    , vector >0.12 && <0.13
+    , hashtables
+    , memory
+    , text
+    , vector
   default-language: Haskell2010
 
 test-suite erc20-test
@@ -71,13 +71,13 @@ test-suite erc20-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
-    , basement >0.0 && <0.1
-    , bytestring >=0.10.12.0 && <0.11.0.0
-    , cereal >0.5 && <0.6
+      base
+    , basement
+    , bytestring
+    , cereal
     , erc20
-    , hashtables >1.0 && <1.4
-    , memory >0.14 && <0.16
-    , text >1.2 && <1.3
-    , vector >0.12 && <0.13
+    , hashtables
+    , memory
+    , text
+    , vector
   default-language: Haskell2010

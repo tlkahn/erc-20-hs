@@ -6,58 +6,30 @@
 
 module Erc20
   ( ERC20,
+    IERC20,
+    balanceOf,
   )
 where
 
-import Control.Concurrent.STM
-import Control.Monad (when)
-import Data.Char
-import qualified Data.HashTable.Class as C
-import qualified Data.HashTable.IO as H
-import qualified Data.Map as Map
-import GHC.Generics
-import Int (UIntN)
-
--- This needs to be updated to sync with the desired blockchain, e.g. ADA etc
-type Address = TVar String
-
-newtype Blockchain = Blockchain (Map.Map String Int) deriving (Show, Eq)
-
-newtype BlockchainOp a = BlockchainOp (Blockchain -> (a, Blockchain))
-
-runBlockchainOp :: BlockchainOp a -> Blockchain -> (a, Blockchain)
-runBlockchainOp (BlockchainOp f) = f
-
-depositOp :: String -> Int -> BlockchainOp ()
-depositOp address amount = BlockchainOp depositHelper
-  where
-    depositHelper blockchain = ((), deposit address amount blockchain)
+type Address = String
 
 data ERC20 = ERC20
-  { totalSupply :: UIntN 256,
+  { totalSupply :: Int,
     name :: String,
-    decimals :: UIntN 8,
+    decimals :: Int,
     symbol :: String
   }
 
 class IERC20 a where
-  balanceOf :: Address -> UIntN 256 -> IO ()
-  transfer :: Address -> UIntN 256 -> IO ()
-  transferFrom :: Address -> Address -> UIntN 256 -> IO ()
-
--- approve :: Address -> UIntN 256 -> IO()
--- allowance :: Address -> Address -> UIntN 256
+  balanceOf :: ERC20 -> Address -> IO ()
+  transfer :: ERC20 -> Address -> Int -> IO ()
+  transferFrom :: ERC20 -> Address -> Address -> Int -> IO ()
+  approve :: ERC20 -> Address -> Int -> IO ()
+  allowance :: ERC20 -> Address -> Address -> Int
 
 instance IERC20 ERC20 where
-  balanceOf addr = C.lookup . addr
-  transfer from to amount =
-    atomically
-      ( do
-          deposit to amount
-          withdraw from amount
-      )
-  transfer to amount =
-    atomically
-      ( do
-          depositOp to amount
-      )
+  balanceOf _ _ = pure ()
+  transfer _ _ _ = pure ()
+  transferFrom _ _ _ _ = pure ()
+  approve _ _ _ = pure ()
+  allowance _ _ _ = 0
